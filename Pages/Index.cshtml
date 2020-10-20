@@ -1,0 +1,63 @@
+﻿@page 
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">From Database</label>
+            <label class="col-form-label">@Model.fromDb</label>
+            @*<div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" value="@Model.fromDb">
+            </div>*@
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">To Database</label>
+            <label class="col-form-label">@Model.toDb</label>
+            @*<div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" value="@Model.toDb">
+            </div>*@
+        </div>
+
+        @if (Model.atts.Count > 0)
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">MaNV</th>
+                        <th scope="col">CheckTime</th>
+                        <th scope="col">Sync</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var att in Model.atts)
+                    {
+                        <tr>
+                            <th scope="row">@att.id</th>
+                            <td>@att.MaNV</td>
+                            <td>@att.tgQuet</td>
+                            <td>@att.isSync</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <h3>No data found.</h3>
+        }
+
+        @if (Model.atts.Where(x => x.isSync == false).ToList().Count > 0)
+        {
+            <form method="post">
+                <button type="submit" class="btn btn-primary">Sync Data</button>
+            </form>
+        }
+
+    </div>
